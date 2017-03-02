@@ -1,4 +1,118 @@
-Create Database SocialMedia
-Go
-Use Database SocialMedia
-Go
+Create Table ACCOUNT
+(
+	/*
+	 SQL Server does not like max for PK
+	*/
+	Fname varchar(max) NOT NULL,
+	Lname varchar(max) NOT NULL,
+	NickName varchar(max) ,
+	Email varchar(40) NOT NULL,
+	[Password] varchar(max) NOT NULL,
+	Gender varchar(max) NOT NULL,
+	PRIMARY KEY (Email)
+);
+
+Create Table FRIEND
+(
+	UserEmail varchar(40) NOT NULL,
+	FriendEmail varchar(40) NOT NULL,
+	PRIMARY KEY(UserEmail,FriendEmail),
+	/*
+	SQL Server does not like on update cascade and on delete cascade
+	Changed to NO ACTION. Kinda don't make sense if Account Deleted bu Friend still have that email
+	*/
+	FOREIGN KEY (UserEmail) REFERENCES ACCOUNT(Email)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY (FriendEmail) REFERENCES ACCOUNT(Email)  on update NO ACTION on delete NO ACTION,
+);
+
+create Table POST
+(
+	PostID int Identity(1001,1),
+	Content varchar(max) NOT NULL,
+	PostDate date NOT NULL,
+	PostTime time NOT NULL,
+	UserEmail varchar(40) NOT NULL,
+	PRIMARY KEY(PostID),
+	FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email)  on update cascade on delete cascade
+	);
+
+Create Table MEDIA
+(
+
+	[Type] varchar(max) NOT NULL,
+	Caption varchar(120) NOT NULL,
+	PostID int NOT NULL,
+	PRIMARY KEY(PostID,Caption),
+	FOREIGN KEY (PostID) REFERENCES POST(PostID)  on update cascade on delete cascade
+);
+
+Create Table REACTION
+(
+	[Type] varchar(40) NOT NULL,
+	PRIMARY KEY(Type)
+);
+
+Create Table POST_REACTION
+(
+
+	UserEmail varchar(40) NOT NULL,
+	PostID int NOT NULL,
+	ReactionType varchar(40) NOT NULL,
+	PRIMARY KEY(UserEmail,PostID),
+	/*
+		Same as above, only accept NO ACTION
+	*/ 
+	FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY(PostID) REFERENCES POST(PostID)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY(ReactionType) REFERENCES REACTION(Type) on update NO ACTION on delete NO ACTION,
+);
+
+Create Table POST_COMMENTS
+(
+	PostID int NOT NULL,
+	
+	CommentTime time NOT NULL,
+	CommentDate date NOT NULL,
+	
+	CommentContent varchar(max) NOT NULL,
+	Commenter varchar(40) NOT NULL,
+	PRIMARY KEY(PostID, CommentTime,CommentDate, Commenter ) ,
+	/*
+	Same NO ACTION
+	*/
+	FOREIGN KEY (PostID) REFERENCES POST(PostID)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY(Commenter) REFERENCES ACCOUNT(Email) on update NO ACTION on delete NO ACTION,
+);
+
+create table MESSAGE_THREAD
+(
+	ThreadID int NOT NULL,
+	OwnerEmail varchar(40) NOT NULL,
+	PRIMARY KEY(ThreadID),
+	FOREIGN KEY(OwnerEmail) REFERENCES ACCOUNT(Email)  on update cascade on delete cascade
+);
+
+create table MESSAGE
+(
+	ThreadID int NOT NULL,
+	Sender varchar(40) NOT NULL,
+	[Date] date NOT NULL,
+	[Time] time NOT NULL,
+	Content varchar(max) NOT NULL,
+	
+	PRIMARY KEY(ThreadID,Sender,[Date], [Time]),
+	/*
+	Same
+	*/
+	FOREIGN KEY(ThreadID) REFERENCES MESSAGE_THREAD(ThreadID)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY(Sender) REFERENCES ACCOUNT(Email)  on update NO ACTION on delete NO ACTION,
+);
+
+Create Table THREAD_PARTICIPANT
+(
+	ThreadID int NOT NULL,
+	UserEmail varchar(40) NOT NULL,
+	PRIMARY KEY(ThreadID,UserEmail),
+	FOREIGN KEY(ThreadID) REFERENCES MESSAGE_THREAD(ThreadID)  on update NO ACTION on delete NO ACTION,
+	FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) on update NO ACTION on delete NO ACTION
+);
