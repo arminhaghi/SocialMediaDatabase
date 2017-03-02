@@ -1,3 +1,8 @@
+Create Database SocialMedia
+Go
+Use  SocialMedia
+GO
+
 Create Table ACCOUNT
 (
 	/*
@@ -86,7 +91,7 @@ Create Table POST_COMMENTS
 
 create table MESSAGE_THREAD
 (
-	ThreadID int NOT NULL,
+	ThreadID int Identity(1001,1),
 	OwnerEmail varchar(40) NOT NULL,
 	PRIMARY KEY(ThreadID),
 	FOREIGN KEY(OwnerEmail) REFERENCES ACCOUNT(Email)  on update cascade on delete cascade
@@ -96,11 +101,11 @@ create table MESSAGE
 (
 	ThreadID int NOT NULL,
 	Sender varchar(40) NOT NULL,
-	[Date] date NOT NULL,
-	[Time] time NOT NULL,
+	MsgDate date NOT NULL,
+	MsgTime time NOT NULL,
 	Content varchar(max) NOT NULL,
 	
-	PRIMARY KEY(ThreadID,Sender,[Date], [Time]),
+	PRIMARY KEY(ThreadID,Sender,MsgDate, MsgTime),
 	/*
 	Same
 	*/
@@ -116,3 +121,4 @@ Create Table THREAD_PARTICIPANT
 	FOREIGN KEY(ThreadID) REFERENCES MESSAGE_THREAD(ThreadID)  on update NO ACTION on delete NO ACTION,
 	FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) on update NO ACTION on delete NO ACTION
 );
+
