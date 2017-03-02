@@ -6,14 +6,14 @@ GO
 Create Table ACCOUNT
 (
 	/*
-	 SQL Server does not like max for PK
+	 SQL Server does not like 40 for PK
 	*/
-	Fname varchar(max) NOT NULL,
-	Lname varchar(max) NOT NULL,
-	NickName varchar(max) ,
+	Fname varchar(40) NOT NULL,
+	Lname varchar(40) NOT NULL,
+	NickName varchar(40) ,
 	Email varchar(40) NOT NULL,
-	[Password] varchar(max) NOT NULL,
-	Gender varchar(max) NOT NULL,
+	[Password] varchar(40) NOT NULL,
+	Gender varchar(40) NOT NULL,
 	PRIMARY KEY (Email)
 );
 
@@ -33,7 +33,7 @@ Create Table FRIEND
 create Table POST
 (
 	PostID int Identity(1001,1),
-	Content varchar(max) NOT NULL,
+	Content varchar(120) NOT NULL,
 	PostDate date NOT NULL,
 	PostTime time NOT NULL,
 	UserEmail varchar(40) NOT NULL,
@@ -44,7 +44,7 @@ create Table POST
 Create Table MEDIA
 (
 
-	[Type] varchar(max) NOT NULL,
+	[Type] varchar(40) NOT NULL,
 	Caption varchar(120) NOT NULL,
 	PostID int NOT NULL,
 	PRIMARY KEY(PostID,Caption),
@@ -79,7 +79,7 @@ Create Table POST_COMMENTS
 	CommentTime time NOT NULL,
 	CommentDate date NOT NULL,
 	
-	CommentContent varchar(max) NOT NULL,
+	CommentContent varchar(40) NOT NULL,
 	Commenter varchar(40) NOT NULL,
 	PRIMARY KEY(PostID, CommentTime,CommentDate, Commenter ) ,
 	/*
@@ -103,7 +103,7 @@ create table MESSAGE
 	Sender varchar(40) NOT NULL,
 	MsgDate date NOT NULL,
 	MsgTime time NOT NULL,
-	Content varchar(max) NOT NULL,
+	Content varchar(120) NOT NULL,
 	
 	PRIMARY KEY(ThreadID,Sender,MsgDate, MsgTime),
 	/*
