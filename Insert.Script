@@ -28,21 +28,21 @@ VALUES ('Image', 'Sunny day',
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Asian@gmail.com' /* Should not directly enter like that. But too long so shortcut */
-AND PostDate = '03/02/2017' AND PostTime = '13:00:00')) ;
+AND PostDate = '03/02/2017' AND PostTime = '13:00:00'), 'Sunny.jpg') ;
 
 insert into MEDIA ([Type], Caption, PostID)
 VALUES ('Video', 'Hands on the Switch',
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Michael@gmail.com'
-AND PostDate = '03/03/2017' AND PostTime = '00:00:01')) ;
+AND PostDate = '03/03/2017' AND PostTime = '00:00:01'), 'NintendoSwitch.jpg') ;
 
 insert into MEDIA ([Type], Caption, PostID)
 VALUES ('Image', 'Browse 9Gag ',
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Smith@gmail.com'
-AND PostDate = '02/28/2017' AND PostTime = '23:59:59')) ;
+AND PostDate = '02/28/2017' AND PostTime = '23:59:59'), 'Selfie.jpg' ) ;
 
 /*
 	Create some Reaction
