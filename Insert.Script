@@ -23,7 +23,7 @@ insert into POST VALUES('Time to get a Nintendo Switch' , '03/03/2017', '00:00:0
 /*
 	Specify the Media attached to each post
 */
-insert into MEDIA ([Type], Caption, PostID)
+insert into MEDIA ([Type], Caption, PostID, FileName)
 VALUES ('Image', 'Sunny day',
 (Select PostID
 from POST, ACCOUNT
