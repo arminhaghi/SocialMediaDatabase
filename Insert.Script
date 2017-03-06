@@ -112,6 +112,27 @@ insert into MESSAGE_THREAD VALUES ('Michael@gmail.com');
 
 
 /*
+	Identify the Thread_Participant. Should not directly enter the value
+*/
+insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+VALUES(
+(select ThreadID
+from MESSAGE_THREAD
+where OwnerEmail = 'Asian@gmail.com'), 'Michael@gmail.com');
+
+insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+VALUES(
+(select ThreadID
+from MESSAGE_THREAD
+where OwnerEmail = 'Asian@gmail.com'), 'Smith@gmail.com');
+
+insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+VALUES(
+(select ThreadID
+from MESSAGE_THREAD
+where OwnerEmail = 'Michael@gmail.com'), 'Asian@gmail.com');
+	
+/*
 	Create some message
 */
 insert into MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
@@ -133,27 +154,3 @@ from MESSAGE_THREAD
 where OwnerEmail = 'Asian@gmail.com') , 'Smith@gmail.com', '05/03/2017','03:05:09', 'Hey');
 
 
-/*
-	Identify the Thread_Participant. Should not directly enter the value
-*/
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
-VALUES(
-(select ThreadID
-from MESSAGE_THREAD
-where OwnerEmail = 'Asian@gmail.com'), 'Michael@gmail.com');
-
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
-VALUES(
-(select ThreadID
-from MESSAGE_THREAD
-where OwnerEmail = 'Asian@gmail.com'), 'Smith@gmail.com');
-
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
-VALUES(
-(select ThreadID
-from MESSAGE_THREAD
-where OwnerEmail = 'Michael@gmail.com'), 'Asian@gmail.com');
-	
-
-
-	  
