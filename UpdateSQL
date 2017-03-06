@@ -2,10 +2,6 @@ update ACCOUNT
 Set Lname = 'Nguyen'
 where Email = 'Asian@gmail.com'
 
-update FRIEND
-set FriendEmail= 'Asian@gmail.com'
-where UserEmail ='Michael@gmail.com'
-
 update MEDIA
 set [Type] = 'Video'
 where Caption = 'Sunny Day'
