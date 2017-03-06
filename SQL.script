@@ -47,6 +47,7 @@ Create Table MEDIA
 	[Type] varchar(40) NOT NULL,
 	Caption varchar(120) NOT NULL,
 	PostID int NOT NULL,
+	FilePath varchar(40) NOT NULL,
 	PRIMARY KEY(PostID,Caption),
 	FOREIGN KEY (PostID) REFERENCES POST(PostID)  on update cascade on delete cascade
 );
