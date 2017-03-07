@@ -1,5 +1,5 @@
 insert into ACCOUNT values ('John', 'Smith', 'jsmith', 'jsmith12@yahoo.com', 'Password', 'M');
-insert into ACCOUNT values ('Emma', 'Janes', 'Emma123', 'emma_j@gmail.com', 'cat123', 'F');
+insert into ACCOUNT values ('Emma', 'James', 'Emma123', 'emma_j@gmail.com', 'cat123', 'F');
 insert into ACCOUNT values ('Daniel', 'Jones', 'DJ', 'dan_jones01@gmail.com', 'keys11', 'M');
 insert into ACCOUNT values ('Joy', 'Philips', 'joy2', 'joyPhilips@gmail.com', 'pass2', 'F');
 
@@ -13,14 +13,13 @@ insert into POST (Content, PostDate, PostTime, UserEmail) values ('Overslept tod
 
 /* MEDIA insertion */
 insert into MEDIA ([Type], Caption, PostID, [FileName]) 
-values ('jpg', 'New phone!', 
-(select PostID from POST where UserEmail = 'jsmith12@yahoo.com' AND PostDate = '07/16/2010' AND PostTime = '12:07:05'),
-'newPhone'); 
+values ('Image', 'New phone!', 
+(select PostID from POST where UserEmail = 'jsmith12@yahoo.com' AND PostDate = '07/16/2010' AND PostTime = '12:07:05'), "iphone.jpg"); 
 
 insert into MEDIA ([Type], Caption, PostID, [FileName])
-values ('png', 'No bus & now raining :(', 
+values ('Image', 'No bus & now raining :(', 
 (select PostID from POST where UserEmail = 'dan_jones01@gmail.com' AND PostDate = '03/27/2015' AND PostTime = '8:30:18'),
-'busStopSign');
+'busStopSign.jpg');
 
 /* REACTION insertion */
 insert into REACTION values ('Angry');
@@ -61,6 +60,16 @@ values ((select PostID from POST where UserEmail = 'jsmith12@yahoo.com' AND Post
 /* MESSAGE_TRHEAD insertion */
 insert into MESSAGE_THREAD (OwnerEmail) values ('jsmith12@yahoo.com');
 
+
+/* THREAD_PARTICIPANT insertion */
+insert into THREAD_PARTICIPANT (ThreadID, UserEmail)
+values ((select ThreadID from MESSAGE_THREAD where OwnderEmail = 'jsmith12@yahoo.com'),
+'jsmith12@yahoo.com');
+
+insert into THREAD_PARTICIPANT (ThreadID, UserEmail)
+values ((select ThreadID from MESSAGE_THREAD where OwnderEmail = 'jsmith12@yahoo.com'), 
+'dan_jones01@gmail.com');
+
 /* MESSAGE insertion */
 insert into [MESSAGE] (ThreadID, Sender, MsgDate, MsgTime, Content)
 values ((select ThreadID from MESSAGE_THREAD where OwnerEmail = 'jsmith12@yahoo.com'), 
@@ -73,12 +82,3 @@ values ((select ThreadID from MESSAGE_THREAD where OwnerEmail = 'jsmith12@yahoo.
 insert into [MESSAGE] (ThreadID, Sender, MsgDate, MsgTime, Content)
 values ((select ThreadID from MESSAGE_THREAD where OwnerEmail = 'jsmith12@yahoo.com'),
 'jsmith12@yahoo.com', '05/25/2009', '20:47:05', 'Yeah! Sounds good!');
-
-/* THREAD_PARTICIPANT insertion */
-insert into THREAD_PARTICIPANT (ThreadID, UserEmail)
-values ((select ThreadID from MESSAGE_THREAD where OwnderEmail = 'jsmith12@yahoo.com'), 
-'dan_jones01@gmail.com');
-
-insert into THREAD_PARTICIPANT (ThreadID, UserEmail)
-values ((select ThreadID from MESSAGE_THREAD where OwnderEmail = 'jsmith12@yahoo.com'),
-'jsmith12@yahoo.com');
