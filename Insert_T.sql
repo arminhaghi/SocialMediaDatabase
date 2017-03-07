@@ -2,42 +2,42 @@
 	Populate some user into the DB
 */
 
-insert into ACCOUNT VALUES('Thuan', 'Tran', 'AsianGuy', 'Asian@gmail.com', 'Password', 'Male');
-insert into ACCOUNT VALUES('Michael', 'Smith', 'Mike', 'Michael@gmail.com', 'Password1', 'Male');
-insert into ACCOUNT VALUES('John', 'Smith', 'John', 'Smith@gmail.com', 'Password2', 'Male'); 
+INSERT INTO ACCOUNT VALUES('Thuan', 'Tran', 'AsianGuy', 'Asian@gmail.com', 'Password', 'Male');
+INSERT INTO ACCOUNT VALUES('Michael', 'Smith', 'Mike', 'Michael@gmail.com', 'Password1', 'Male');
+INSERT INTO ACCOUNT VALUES('John', 'Smith', 'John', 'Smith@gmail.com', 'Password2', 'Male'); 
 
 /*
 	Create some friend for an account
 */
-insert into FRIEND VALUES('Asian@gmail.com', 'Michael@gmail.com');
-insert into FRIEND VALUES('Michael@gmail.com', 'Smith@gmail.com');
-insert into FRIEND VALUES('Smith@gmail.com', 'Asian@gmail.com');
+INSERT INTO FRIEND VALUES('Asian@gmail.com', 'Michael@gmail.com');
+INSERT INTO FRIEND VALUES('Michael@gmail.com', 'Smith@gmail.com');
+INSERT INTO FRIEND VALUES('Smith@gmail.com', 'Asian@gmail.com');
 
 /*
 	Create some post
 */
-insert into POST VALUES('Today is a wonderful day', '03/02/2017', '13:00:00', 'Asian@gmail.com');
-insert into POST VALUES('Time to browse 9Gag', '02/28/2017', '23:59:59', 'Smith@gmail.com');
-insert into POST VALUES('Time to get a Nintendo Switch' , '03/03/2017', '00:00:01', 'Michael@gmail.com');
+INSERT INTO POST VALUES('Today is a wonderful day', '03/02/2017', '13:00:00', 'Asian@gmail.com');
+INSERT INTO POST VALUES('Time to browse 9Gag', '02/28/2017', '23:59:59', 'Smith@gmail.com');
+INSERT INTO POST VALUES('Time to get a Nintendo Switch' , '03/03/2017', '00:00:01', 'Michael@gmail.com');
 
 /*
 	Specify the Media attached to each post
 */
-insert into MEDIA ([Type], Caption, PostID, FileName)
+INSERT INTO MEDIA ([Type], Caption, PostID, FileName)
 VALUES ('Image', 'Sunny day',
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Asian@gmail.com' /* Should not directly enter like that. But too long so shortcut */
 AND PostDate = '03/02/2017' AND PostTime = '13:00:00'), 'Sunny.jpg') ;
 
-insert into MEDIA ([Type], Caption, PostID, FileName)
+INSERT INTO MEDIA ([Type], Caption, PostID, FileName)
 VALUES ('Video', 'Hands on the Switch',
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Michael@gmail.com'
 AND PostDate = '03/03/2017' AND PostTime = '00:00:01'), 'NintendoSwitch.mp4') ;
 
-insert into MEDIA ([Type], Caption, PostID, FileName)
+INSERT INTO MEDIA ([Type], Caption, PostID, FileName)
 VALUES ('Image', 'Browse 9Gag ',
 (Select PostID
 from POST, ACCOUNT
@@ -47,29 +47,29 @@ AND PostDate = '02/28/2017' AND PostTime = '23:59:59'), 'Selfie.jpg' ) ;
 /*
 	Create some Reaction
 */
-insert into REACTION VALUES('Smile');
-insert into REACTION VALUES('Sad');
-insert into REACTION VALUES('Excited');
+INSERT INTO REACTION VALUES('Smile');
+INSERT INTO REACTION VALUES('Sad');
+INSERT INTO REACTION VALUES('Excited');
 
 
 /*
 	Identify who make the reaction
 */
-insert into POST_REACTION (UserEmail,PostID, ReactionType )
+INSERT INTO POST_REACTION (UserEmail,PostID, ReactionType )
 VALUES('Smith@gmail.com', /* Should not directly manually insert like this but it was too long */
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Asian@gmail.com'
 AND PostDate = '03/02/2017' AND PostTime = '13:00:00'), 'Smile'); /* Should not do this as well */
 
-insert into POST_REACTION (UserEmail,PostID, ReactionType )
+INSERT INTO POST_REACTION (UserEmail,PostID, ReactionType )
 VALUES('Smith@gmail.com', /* Should not directly manually insert like this but it was too long */
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Michael@gmail.com'
 AND PostDate = '03/03/2017' AND PostTime = '00:00:01') , 'Excited'); /* Should not do this as well */
 
-insert into POST_REACTION (UserEmail,PostID, ReactionType )
+INSERT INTO POST_REACTION (UserEmail,PostID, ReactionType )
 VALUES('Michael@gmail.com', /* Should not directly manually insert like this but it was too long */
 (Select PostID
 from POST, ACCOUNT
@@ -81,21 +81,21 @@ AND PostDate = '02/28/2017' AND PostTime = '23:59:59'), 'Sad'); /* Should not do
 /*
 	Populate some comments for a post
 */
-insert into POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
+INSERT INTO POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
 VALUES(
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Smith@gmail.com'
 AND PostDate = '02/28/2017' AND PostTime = '23:59:59'), '05:06:30', '03/08/2017', 'Nice one', 'Asian@gmail.com');
 
-insert into POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
+INSERT INTO POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
 VALUES(
 (Select PostID
 from POST, ACCOUNT
 where POST.UserEmail = ACCOUNT.Email AND POST.UserEmail = 'Michael@gmail.com'
 AND PostDate = '03/03/2017' AND PostTime = '00:00:01'), '05:15:38', '03/08/2017', 'Good Job', 'Smith@gmail.com');
 
-insert into POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
+INSERT INTO POST_COMMENTS (PostID, CommentTime, CommentDate, CommentContent, Commenter)
 VALUES(
 (Select PostID
 from POST, ACCOUNT
@@ -106,27 +106,27 @@ AND PostDate = '03/03/2017' AND PostTime = '00:00:01'), '05:15:30', '03/08/2017'
 /*
 	Create some message Thread
 */
-insert into MESSAGE_THREAD VALUES ('Asian@gmail.com');
-insert into MESSAGE_THREAD VALUES ('Smith@gmail.com');
-insert into MESSAGE_THREAD VALUES ('Michael@gmail.com');
+INSERT INTO MESSAGE_THREAD VALUES ('Asian@gmail.com');
+INSERT INTO MESSAGE_THREAD VALUES ('Smith@gmail.com');
+INSERT INTO MESSAGE_THREAD VALUES ('Michael@gmail.com');
 
 
 /*
 	Identify the Thread_Participant. Should not directly enter the value
 */
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+INSERT INTO THREAD_PARTICIPANT(ThreadID,UserEmail)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
 where OwnerEmail = 'Asian@gmail.com'), 'Michael@gmail.com');
 
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+INSERT INTO THREAD_PARTICIPANT(ThreadID,UserEmail)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
 where OwnerEmail = 'Asian@gmail.com'), 'Smith@gmail.com');
 
-insert into THREAD_PARTICIPANT(ThreadID,UserEmail)
+INSERT INTO THREAD_PARTICIPANT(ThreadID,UserEmail)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
@@ -135,19 +135,19 @@ where OwnerEmail = 'Michael@gmail.com'), 'Asian@gmail.com');
 /*
 	Create some message
 */
-insert into MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
+INSERT INTO MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
 where OwnerEmail = 'Asian@gmail.com' ), 'Michael@gmail.com', '05/03/2017','03:05:08', 'Hey');
 
-insert into MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
+INSERT INTO MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
 where OwnerEmail = 'Michael@gmail.com') , 'Asian@gmail.com', '05/03/2017','03:05:10', 'Dude');
 
-insert into MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
+INSERT INTO MESSAGE (ThreadID, Sender, MsgDate, MsgTime, Content)
 VALUES(
 (select ThreadID
 from MESSAGE_THREAD
