@@ -292,6 +292,9 @@ Select * from ACCOUNT
 -- Select a user’s friends
 Select * from FRIEND Where UserEmail = 'billyat8@uw.edu' OR FriendEmail = 'billyat8@uw.edu'
 
+-- Select a user’s friends count
+Select COUNT(*) AS 'Total Friends' from FRIEND Where UserEmail = 'billyat8@uw.edu' OR FriendEmail = 'billyat8@uw.edu'
+
 -- Select a user’s posts
 Select * from POST Where UserEmail = 'nickim@uw.edu'
 
