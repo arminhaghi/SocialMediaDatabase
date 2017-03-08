@@ -30,7 +30,7 @@ Create Table ACCOUNT
 (
 	Firstname varchar(40) NOT NULL,
 	Lastname varchar(40) NOT NULL,
-	NickName varchar(40) ,
+	Nickname varchar(40) ,
 	Email varchar(40) NOT NULL,
 	[Password] varchar(40) NOT NULL,
 	Gender varchar(10) NOT NULL,
