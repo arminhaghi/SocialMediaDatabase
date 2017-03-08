@@ -288,6 +288,7 @@ UPDATE POST SET Content = 'oops! you saw nothing!' WHERE PostID = 24;
 
 ---------------------- SELECT ----------------------
 
+-- Comments in the report are more descriptive.
 -- Select all users
 Select * from ACCOUNT
 
