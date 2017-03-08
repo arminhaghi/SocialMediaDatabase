@@ -102,6 +102,8 @@ Create table MESSAGE_THREAD
 (
 	ThreadID int,
 	OwnerEmail varchar(40) NOT NULL,
+	ThDate date NOT NULL,
+	ThTime time NOT NULL,
 	PRIMARY KEY(ThreadID),
 	FOREIGN KEY(OwnerEmail) REFERENCES ACCOUNT(Email) ON UPDATE CASCADE ON DELETE CASCADE
 )
@@ -228,10 +230,10 @@ INSERT INTO POST_COMMENT VALUES
 (20, '03/01/2017', '17:02:49', 'OMG THEIR SO CUTE!!', 'taylors@uw.edu')
 
 INSERT INTO MESSAGE_THREAD VALUES 
-(10, 'Asian@gmail.com'),
-(11, 'Michael@gmail.com'),
-(15, 'jsmith12@yahoo.com'),
-(20, 'taylors@uw.edu')
+(10, 'Asian@gmail.com', '05/03/2017','03:05:08'),
+(11, 'Michael@gmail.com', '07/16/2010','01:00:00'),
+(15, 'jsmith12@yahoo.com', '05/03/2017','06:15:08'),
+(20, 'taylors@uw.edu', '05/13/2017','03:05:00')
 
 INSERT INTO THREAD_PARTICIPANT VALUES
 (10, 'Michael@gmail.com'),
@@ -312,11 +314,11 @@ Select * from POST_COMMENT Where PostId = 15
 
 -- Select a user’s conversations that they own the thread
 Select * from MESSAGE M, MESSAGE_THREAD T
-Where M.ThreadID = T.ThreadID AND M.ThreadID IN (Select ThreadID from MESSAGE_THREAD Where OwnerEmail = 'taylors@uw.edu')
+Where M.ThreadID = T.ThreadID AND M.ThreadID IN (Select ThreadID from MESSAGE_THREAD Where OwnerEmail = 'taylors@uw.edu' AND ThDate = '05/13/2017' AND ThTime = '03:05:00')
 
 -- Select message thread's participants and owner
 Select T.OwnerEmail AS Owner, P.UserEmail AS Participant from MESSAGE_THREAD T, THREAD_PARTICIPANT P
-Where T.ThreadID = P.ThreadID AND P.ThreadID IN (Select ThreadID from MESSAGE_THREAD Where OwnerEmail = 'taylors@uw.edu')
+Where T.ThreadID = P.ThreadID AND P.ThreadID IN (Select ThreadID from MESSAGE_THREAD Where OwnerEmail = 'taylors@uw.edu' AND ThDate = '05/13/2017' AND ThTime = '03:05:00')
 
 -- Select message thread's total participant count
 Select T.ThreadID, T.OwnerEmail, COUNT(P.UserEmail) AS 'Total Participants' from MESSAGE_THREAD T, THREAD_PARTICIPANT P
