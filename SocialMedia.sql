@@ -86,7 +86,7 @@ Create Table POST_REACTION
 	FOREIGN KEY(ReactionType) REFERENCES REACTION(Type) ON UPDATE CASCADE ON DELETE CASCADE,
 )
 
-Create Table POST_COMMENTS
+Create Table POST_COMMENT
 (
 	PostID int NOT NULL,
 	CommentTime time NOT NULL,
@@ -135,7 +135,7 @@ Create table MESSAGE
 DELETE FROM MESSAGE
 DELETE FROM THREAD_PARTICIPANT
 DELETE FROM MESSAGE_THREAD
-DELETE FROM POST_COMMENTS
+DELETE FROM POST_COMMENT
 DELETE FROM POST_REACTION
 DELETE FROM REACTION
 DELETE FROM MEDIA
@@ -215,7 +215,7 @@ INSERT INTO POST_REACTION VALUES
 ('nickim@uw.edu', 22, 'Surprised')
 
 
-INSERT INTO POST_COMMENTS VALUES
+INSERT INTO POST_COMMENT VALUES
 (11, '05:06:30', '03/08/2017', 'Nice one', 'Asian@gmail.com'),
 (12, '05:15:38', '03/08/2017', 'Good Job', 'Smith@gmail.com'),
 (12, '05:15:30', '03/08/2017', 'Good Job', 'Asian@gmail.com'),
@@ -268,7 +268,7 @@ UPDATE MEDIA Set [Type] = 'Video', [Filename] = 'Selfie.mp4', Caption = 'Selfie 
 
 UPDATE POST Set Content = 'I am bored' Where PostID = 11
 
-UPDATE POST_COMMENTS Set Content = 'Too bad' Where UserEmail = 'Asian@gmail.com' AND CommentTime = '05:06:30' AND CommentDate = '03/08/2017'
+UPDATE POST_COMMENT Set Content = 'Too bad' Where UserEmail = 'Asian@gmail.com' AND CommentTime = '05:06:30' AND CommentDate = '03/08/2017'
 
 UPDATE ACCOUNT Set NickName = 'joker' Where Email = 'jsmith12@yahoo.com'
 
@@ -299,7 +299,7 @@ Select COUNT(*) AS 'Total Friends' from FRIEND Where UserEmail = 'billyat8@uw.ed
 Select * from POST Where UserEmail = 'nickim@uw.edu'
 
 -- Select a post’s comments
-Select * from POST_COMMENTS Where PostId = 20
+Select * from POST_COMMENT Where PostId = 20
 
 -- Select a post's reactions
 Select * from POST_REACTION Where PostId = 20
@@ -308,7 +308,7 @@ Select * from POST_REACTION Where PostId = 20
 Select * from POST Where UserEmail = 'jsmith12@yahoo.com'
 
 -- Select a post’s comments
-Select * from POST_COMMENTS Where PostId = 15
+Select * from POST_COMMENT Where PostId = 15
 
 -- Select a user’s conversations that they own the thread
 Select * from MESSAGE M, MESSAGE_THREAD T
@@ -336,7 +336,7 @@ OR P.UserEmail IN (Select FriendEmail from FRIEND Where UserEmail = 'billyat8@uw
 
 -- Select last 20 posts from a user's friend and # of comments and total # of reactions in descending order of post date and time
 Select TOP 20 P.UserEmail, P.Content, P.PostDate, P.PostTime, COUNT(C.PostId) AS 'Total Comments', COUNT(R.PostId) AS 'Total Reactions'
-From Post P Left Join POST_COMMENTS C ON P.PostID = C.PostID Left Join POST_REACTION R ON P.PostID = R.PostID
+From Post P Left Join POST_COMMENT C ON P.PostID = C.PostID Left Join POST_REACTION R ON P.PostID = R.PostID
 Where P.UserEmail IN (Select UserEmail from FRIEND Where FriendEmail = 'billyat8@uw.edu')
 OR P.UserEmail IN (Select FriendEmail from FRIEND Where UserEmail = 'billyat8@uw.edu')
 Group By P.UserEmail, P.Content, P.PostDate, P.PostTime
@@ -344,7 +344,7 @@ Order By P.PostDate, P.PostTime Desc
 
 -- Select all posts with total # of comments and total # of reactions in descending order of total comments
 Select P.UserEmail, P.Content, P.PostDate, P.PostTime, COUNT(C.PostId) AS 'Total Comments', COUNT(R.PostId) AS 'Total Reactions'
-From POST P, POST_COMMENTS C, POST_REACTION R
+From POST P, POST_COMMENT C, POST_REACTION R
 Where P.PostID = C.PostID AND P.PostID = R.PostID
 Group By P.UserEmail, P.Content, P.PostDate, P.PostTime
 Order By 'Total Comments' Desc
