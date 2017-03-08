@@ -326,8 +326,20 @@ Select * from MEDIA Where PostId = 10
 -- Select user with the most posts
 Select MAX(UserEmail) AS 'Big Contributor' from POST
 
+-- Select last 20 posts from a user's friend 
+Select TOP 20 * from POST P
+Where P.UserEmail IN (Select UserEmail from FRIEND Where FriendEmail = 'billyat8@uw.edu')
+OR P.UserEmail IN (Select FriendEmail from FRIEND Where UserEmail = 'billyat8@uw.edu')
 
--- Select post with total # of comments and total # of reactions in descending order of total comments
+-- Select last 20 posts from a user's friend and # of comments and total # of reactions in descending order of post date and time
+Select TOP 20 P.UserEmail, P.Content, P.PostDate, P.PostTime, COUNT(C.PostId) AS 'Total Comments', COUNT(R.PostId) AS 'Total Reactions'
+From Post P Left Join POST_COMMENTS C ON P.PostID = C.PostID Left Join POST_REACTION R ON P.PostID = R.PostID
+Where P.UserEmail IN (Select UserEmail from FRIEND Where FriendEmail = 'billyat8@uw.edu')
+OR P.UserEmail IN (Select FriendEmail from FRIEND Where UserEmail = 'billyat8@uw.edu')
+Group By P.UserEmail, P.Content, P.PostDate, P.PostTime
+Order By P.PostDate, P.PostTime Desc
+
+-- Select all posts with total # of comments and total # of reactions in descending order of total comments
 Select P.UserEmail, P.Content, P.PostDate, P.PostTime, COUNT(C.PostId) AS 'Total Comments', COUNT(R.PostId) AS 'Total Reactions'
 From POST P, POST_COMMENTS C, POST_REACTION R
 Where P.PostID = C.PostID AND P.PostID = R.PostID
